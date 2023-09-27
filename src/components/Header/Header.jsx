@@ -1,9 +1,16 @@
 import React from 'react';
 import "./Header.css";
 import { Avatar, IconButton } from '@mui/material';
-import { Apps, FormatAlignCenter, HelpOutline, Search, Settings, SettingsOutlined } from '@mui/icons-material';
+import { Apps, FormatAlignCenter, HelpOutline, Search, SettingsOutlined } from '@mui/icons-material';
+import {
+    useUserContext
+} from "../../context/UserContext";
+import {auth,signOut} from "../../firebase";
 
 const Header = () => {
+
+    const {user} = useUserContext();
+
   return (
     <div className='header'>
         <div className="header_left">
@@ -34,8 +41,8 @@ const Header = () => {
                 <IconButton>
                     <Apps />
                 </IconButton>
-                <IconButton>
-                    <Avatar />
+                <IconButton onClick={()=>signOut(auth)}>
+                    <Avatar src={user.photoURL} />
                 </IconButton>
             </div>
         </div>

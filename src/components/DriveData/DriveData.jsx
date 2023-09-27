@@ -1,9 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./DriveData.css";
 import { ArrowDownward, ArrowDropDown, InfoOutlined, InsertDriveFile, List } from '@mui/icons-material';
 import { Avatar, IconButton } from '@mui/material';
+import {
+    collection,
+    db,
+    query,
+    orderBy,
+    limit,
+    onSnapshot
+} from "../../firebase";
 
 const DriveData = () => {
+
+    const [files,setFiles] = useState([]);
+    const [fileName,setFileName] = useState("");
+
+    useEffect(()=>{
+        const queryData = query(collection(db, "MyDrive"),orderBy("timestamp","desc"));
+        onSnapshot(queryData,(snapshot)=>{
+            const snap = snapshot.docs.map((doc)=>({
+                id : doc.id,
+                data : doc.data()
+            }));
+            setFiles(snap);
+        });
+
+        const queryName = query(collection(db, "MyDrive"),orderBy("timestamp","desc"),limit(4));
+        onSnapshot(queryName,(snapshot)=>{
+            const snap = snapshot.docs.map((doc)=>({
+                id : doc.id,
+                filename : doc.data().filename
+            }));
+            setFileName(snap);
+        });
+
+    },[]);
+
+    const formatBytes = (bytes,decimals = 2)=>{
+        if(bytes === 0) return "0 Bytes";
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
   return (
     <div className='driveData'>
         <div className="driveData_header">
@@ -38,10 +83,14 @@ const DriveData = () => {
 
         <div className='driveData_body'>
             <div className='driveData_suggested_options'>
-                <div className='driveData_suggested_option' style={{cursor:"pointer"}}>
-                    <InsertDriveFile />
-                    <span>File Name</span>
-                </div>
+                {
+                    fileName && fileName.map(({id,filename})=>{
+                        return <div key={id} className='driveData_suggested_option' style={{cursor:"pointer",overflow:"hidden"}}>
+                        <InsertDriveFile />
+                        <span>{filename}</span>
+                    </div>
+                    })
+                }
             </div>
 
 
@@ -54,13 +103,17 @@ const DriveData = () => {
                         <th><span>File size</span></th>
                     </tr>
 
-                    <tr className='list_hover'>
-                        <td style={{paddingLeft:"15px"}}><span><InsertDriveFile style={{marginRight:"10px"}} /> file name</span></td>
-                        <td><span><Avatar style={{marginRight:"10px"}} /> me</span></td>
-                        <td><span>16 Jul 2023</span></td>
-                        <td><span>342.32 KB</span></td>
-                    </tr>
-   
+                    {
+                        files && files.map(({id, data})=>{
+                            return <tr key={id} className='list_hover'>
+                            <td style={{paddingLeft:"15px"}}><a href={data.fileURL} target='_blank' rel="noreferrer" download={data.filename}><span><InsertDriveFile style={{marginRight:"10px"}} /> {data.filename}</span></a></td>
+                            <td><span><Avatar style={{marginRight:"10px"}} /> me</span></td>
+                            <td><span>{new Date(data.timestamp?.seconds*1000).toUTCString()}</span></td>
+                            <td><span>{formatBytes(data.size)}</span></td>
+                        </tr>
+                        })
+                    }
+
                 </table>
             </div>
         </div>
