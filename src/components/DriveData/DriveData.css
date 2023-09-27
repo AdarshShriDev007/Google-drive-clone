@@ -1,0 +1,52 @@
+.driveData{
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    
+}
+
+.driveData_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.driveData_header_left{
+    display: flex;
+    align-items: center;
+}
+
+.driveData_header_left span{
+    font-size: 23px;
+    color: #1F1F1F;
+    margin-right: 5px;
+}
+
+.driveData_header_right svg{
+    font-size: 20px;
+}
+
+
+.driveData_middle_options{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.driveData_middle_option{
+    display: flex;
+    align-items: center;
+    border: 1px solid #1F1F1F;
+    border-radius: 7px;
+    padding: 3px 10px;
+}
+
+.driveData_middle_option:hover{
+    background-color: #F0F1F1;
+    cursor: pointer;
+}
+
+.driveData_middle_option span{
+    font-size: 14px;
+}
