@@ -1,8 +1,10 @@
 .driveData{
     background-color: #fff;
     border-radius: 15px;
-    padding: 20px;
-    
+    height: 86vh;
+    overflow: hidden;
+    padding-top: 20px;
+    padding-left: 20px;
 }
 
 .driveData_header{
@@ -32,6 +34,7 @@
     display: flex;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .driveData_middle_option{
@@ -50,3 +53,94 @@
 .driveData_middle_option span{
     font-size: 14px;
 }
+
+.driveData_body{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    padding-bottom: 110px;
+}
+
+.driveData_body::-webkit-scrollbar{
+    width: 7px;
+}
+
+.driveData_body::-webkit-scrollbar-thumb{
+    background-color: #C7C7C7;
+    border-radius: 50px;
+}
+
+.driveData_body::-webkit-scrollbar-thumb:hover{
+    background-color: #747775;
+}
+
+
+
+.driveData_suggested_options{
+    display: flex;
+    align-items: center;
+}
+
+.driveData_suggested_option{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    width: 200px;
+    padding-top: 10px;
+    margin: 50px 10px;
+
+}
+
+.driveData_suggested_option svg{
+    font-size: 60px;
+    color: #808080;
+}
+
+.driveData_suggested_option span{
+    font-size: 11px;
+    background-color: #EDF2FC;
+    border-top: 1px solid lightgrey;
+    width: 100%;
+    padding: 5px 10px;
+    margin-top: 10px;
+    
+}
+
+.driveData_lists table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.driveData_lists table tr{
+    border-bottom: 1px solid lightgray;
+    text-align: left;
+}
+
+.driveData_lists table tr svg
+{
+    font-size: 20px;
+}
+
+.driveData_lists .MuiAvatar-root{
+    width: 20px;
+    height: 20px;
+}
+
+.driveData_lists table tr span{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.driveData_lists table tr td{
+   padding: 10px 0px;
+}
+
+.driveData_lists table .list_hover:hover{
+    cursor: pointer;
+    background-color: #F0F1F1;
+}
+
